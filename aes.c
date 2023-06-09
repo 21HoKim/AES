@@ -230,8 +230,9 @@ void aes_key_expansion(uint8_t *key, uint8_t *w) {
 		w[4*i+2] = key[4*i+2];
 		w[4*i+3] = key[4*i+3];
 	}
-
+	int count =3;
 	for (i = Nk; i < len; i++) {
+		count++;
 		tmp[0] = w[4*(i-1)+0];
 		tmp[1] = w[4*(i-1)+1];
 		tmp[2] = w[4*(i-1)+2];
@@ -254,7 +255,7 @@ void aes_key_expansion(uint8_t *key, uint8_t *w) {
 		w[4*i+1] = w[4*(i-Nk)+1]^tmp[1];
 		w[4*i+2] = w[4*(i-Nk)+2]^tmp[2];
 		w[4*i+3] = w[4*(i-Nk)+3]^tmp[3];
-		printf("%x%x%x%x\n",w[4*i+0],w[4*i+1],w[4*i+2],w[4*i+3]);
+		printf("[%d]%x%x%x%x\n",count,w[4*i+0],w[4*i+1],w[4*i+2],w[4*i+3]);
 	}
 }
 
