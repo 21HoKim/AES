@@ -223,7 +223,7 @@ void aes_key_expansion(uint8_t *key, uint8_t *w) {
 	uint8_t tmp[4];
 	uint8_t i;
 	uint8_t len = Nb*(Nr+1);
-
+	puts("w[i] = temp ^ w[i-Nk]");
 	for (i = 0; i < Nk; i++) {
 		w[4*i+0] = key[4*i+0];
 		w[4*i+1] = key[4*i+1];
@@ -249,21 +249,18 @@ void aes_key_expansion(uint8_t *key, uint8_t *w) {
 
 		}
 
+		
 		w[4*i+0] = w[4*(i-Nk)+0]^tmp[0];
 		w[4*i+1] = w[4*(i-Nk)+1]^tmp[1];
 		w[4*i+2] = w[4*(i-Nk)+2]^tmp[2];
 		w[4*i+3] = w[4*(i-Nk)+3]^tmp[3];
+		printf("%x%x%x%x\n",w[4*i+0],w[4*i+1],w[4*i+2],w[4*i+3]);
 	}
 }
 
 uint8_t *aes_init(size_t key_size) {
 
-        switch (key_size) {
-		default:
-		case 16: Nk = 4; Nr = 10; break;
-		case 24: Nk = 6; Nr = 12; break;
-		case 32: Nk = 8; Nr = 14; break;
-	}
+    Nk = 4; Nr = 10;
 
 	return malloc(Nb*(Nr+1)*4);
 }
